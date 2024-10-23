@@ -8,10 +8,13 @@ public class SceneInstaller : MonoInstaller
     [SerializeField] private float blockFallSpeed;
     [SerializeField] private float minBlockHorizontalMoveDelta;
     [SerializeField] private float blockHorizontalMoveAmount;
+    [SerializeField] private float blockVerticalMoveAmount;
     [SerializeField] private FixTrigger[] fixTriggers;
     [SerializeField] private float cameraMovementSmoothness;
     [SerializeField] private Transform cam;
     [SerializeField] private Transform blocksParent;
+    [SerializeField] private LayerMask blocksLayer;
+    [SerializeField] private float nextTriggerVerticalOffset;
     public override void InstallBindings()
     {
         this.Container.Bind<Transform>()
@@ -30,9 +33,11 @@ public class SceneInstaller : MonoInstaller
             .FromNew()
             .AsSingle();
         this.Container.BindInterfacesAndSelfTo<BlockSpawner>()
+            .FromNew()
             .AsSingle()
             .NonLazy();
-        this.Container.Bind<ActiveBlocksArray>()
+        this.Container.BindInterfacesAndSelfTo<ActiveBlocksArray>()
+            .FromNew()
             .AsSingle();
 
         this.Container.Bind<Controls>()
@@ -47,6 +52,10 @@ public class SceneInstaller : MonoInstaller
         this.Container.Bind<float>()
             .WithId("BlockHorizontalMoveAmount")
             .FromInstance(blockHorizontalMoveAmount)
+            .AsTransient();
+        this.Container.Bind<float>()
+            .WithId("BlockVerticalMoveAmount")
+            .FromInstance(blockVerticalMoveAmount)
             .AsTransient();
 
         this.Container.BindInterfacesAndSelfTo<BlockMoveInput>()
@@ -76,6 +85,20 @@ public class SceneInstaller : MonoInstaller
         this.Container.Bind<Transform>()
             .WithId("BlocksParent")
             .FromInstance(blocksParent)
+            .AsTransient();
+
+        this.Container.BindInterfacesAndSelfTo<FPSUnlocker>()
+            .FromNew()
+            .AsSingle()
+            .NonLazy();
+
+        this.Container.Bind<LayerMask>()
+            .WithId("BlocksLayer")
+            .FromInstance(blocksLayer)
+            .AsTransient();
+        this.Container.Bind<float>()
+            .WithId("NextTriggerVerticalOffset")
+            .FromInstance(nextTriggerVerticalOffset)
             .AsTransient();
     }
 }

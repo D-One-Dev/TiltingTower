@@ -9,6 +9,8 @@ public class BlockMover : IFixedTickable
     private readonly float _blockHorizontalMoveAmount;
     [Inject(Id = "FixTriggers")]
     private readonly FixTrigger[] _fixTriggers;
+    [Inject(Id = "BlockVerticalMoveAmount")]
+    private readonly float _blockVerticalMoveAmount;
 
     private GameObject _currentBlock;
     private Rigidbody2D _currentBlockRB;
@@ -17,6 +19,7 @@ public class BlockMover : IFixedTickable
     private CameraMovement _cameraMovement;
 
     private Vector3 _blockHorizontalDelta = Vector3.zero;
+    private Vector3 _blockVerticalDelta;
 
     [Inject]
     public void Construct(BlockSpawner blockSpawner, ActiveBlocksArray activeBlocksArray, CameraMovement cameraMovement)
@@ -30,7 +33,8 @@ public class BlockMover : IFixedTickable
     {
         if (_currentBlockRB != null)
         {
-            _currentBlockRB.MovePosition(_currentBlockRB.transform.position + (_blockFallSpeed * Vector3.down) + _blockHorizontalDelta);
+            _currentBlockRB.MovePosition(_currentBlockRB.transform.position + ((_blockFallSpeed) * Vector3.down) + _blockVerticalDelta + _blockHorizontalDelta);
+            _blockVerticalDelta = Vector3.zero;
             _blockHorizontalDelta = Vector3.zero;
         }
     }
@@ -83,5 +87,11 @@ public class BlockMover : IFixedTickable
     public void RotateBlock()
     {
         _currentBlock.transform.Rotate(0f, 0f, -90f);
+    }
+
+    public void MoveBlockVertical(float amount)
+    {
+        _blockVerticalDelta = _blockVerticalMoveAmount * amount * Vector3.up;
+        Debug.Log(_blockVerticalDelta);
     }
 }

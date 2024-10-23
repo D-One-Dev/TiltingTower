@@ -320,7 +320,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.1978141, g: 0.29131854, b: 0.3056603, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -406,10 +406,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13282cace4b91c478a539bc5bbe67aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blockLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  nextTriggerVerticalDelta: 5
 --- !u!4 &540774183
 Transform:
   m_ObjectHideFlags: 0
@@ -467,7 +463,6 @@ GameObject:
   - component: {fileID: 1286143880}
   - component: {fileID: 1286143882}
   - component: {fileID: 1286143881}
-  - component: {fileID: 1286143883}
   m_Layer: 0
   m_Name: System
   m_TagString: Untagged
@@ -508,11 +503,16 @@ MonoBehaviour:
   blockFallSpeed: 0.025
   minBlockHorizontalMoveDelta: 100
   blockHorizontalMoveAmount: 0.25
+  blockVerticalMoveAmount: 0.0001
   fixTriggers:
   - {fileID: 540774182}
   cameraMovementSmoothness: 10
   cam: {fileID: 519420032}
   blocksParent: {fileID: 289255398}
+  blocksLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  nextTriggerVerticalOffset: 10
 --- !u!114 &1286143882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,18 +545,6 @@ MonoBehaviour:
   _parentNewObjectsUnderSceneContext: 0
   _contractNames: []
   _parentContractNames: []
---- !u!114 &1286143883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1286143878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5e56c4cc5c4f1a4b8ac71b10928da6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1314045815
 GameObject:
   m_ObjectHideFlags: 0

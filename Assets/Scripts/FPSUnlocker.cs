@@ -1,8 +1,9 @@
 using UnityEngine;
+using Zenject;
 
-public class FPSUnlocker : MonoBehaviour
+public class FPSUnlocker : IInitializable
 {
-    private void Awake()
+    public void Initialize()
     {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 10000;

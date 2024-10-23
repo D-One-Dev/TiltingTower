@@ -2,12 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class ActiveBlocksArray
+public class ActiveBlocksArray : IInitializable
 {
     private List<Rigidbody2D> activeBlocks;
 
-    [Inject]
-    public void Counstruct()
+    public void Initialize()
     {
         activeBlocks = new List<Rigidbody2D>();
     }

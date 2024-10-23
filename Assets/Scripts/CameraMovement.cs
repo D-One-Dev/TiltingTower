@@ -7,6 +7,7 @@ public class CameraMovement : ITickable
     private readonly float _cameraMovementSmoothness;
     [Inject(Id = "Camera")]
     private readonly Transform _camera;
+
     private float _maxBlockHeight = 0;
 
     public void Tick()
