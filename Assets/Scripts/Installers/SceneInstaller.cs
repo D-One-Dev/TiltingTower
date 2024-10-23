@@ -8,6 +8,10 @@ public class SceneInstaller : MonoInstaller
     [SerializeField] private float blockFallSpeed;
     [SerializeField] private float minBlockHorizontalMoveDelta;
     [SerializeField] private float blockHorizontalMoveAmount;
+    [SerializeField] private FixTrigger[] fixTriggers;
+    [SerializeField] private float cameraMovementSmoothness;
+    [SerializeField] private Transform cam;
+    [SerializeField] private Transform blocksParent;
     public override void InstallBindings()
     {
         this.Container.Bind<Transform>()
@@ -49,5 +53,29 @@ public class SceneInstaller : MonoInstaller
             .FromNew()
             .AsSingle()
             .NonLazy();
+
+        this.Container.Bind<FixTrigger[]>()
+            .WithId("FixTriggers")
+            .FromInstance(fixTriggers)
+            .AsTransient();
+
+        this.Container.Bind<float>()
+            .WithId("CameraMovementSmoothness")
+            .FromInstance(cameraMovementSmoothness)
+            .AsTransient();
+        this.Container.Bind<Transform>()
+            .WithId("Camera")
+            .FromInstance(cam)
+            .AsTransient();
+
+        this.Container.BindInterfacesAndSelfTo<CameraMovement>()
+            .FromNew()
+            .AsSingle()
+            .NonLazy();
+
+        this.Container.Bind<Transform>()
+            .WithId("BlocksParent")
+            .FromInstance(blocksParent)
+            .AsTransient();
     }
 }

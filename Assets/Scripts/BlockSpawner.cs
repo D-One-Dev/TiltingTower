@@ -7,6 +7,8 @@ public class BlockSpawner : IInitializable
     private readonly Transform _blockSpawnPoint;
     [Inject(Id = "BlockPrefabs")]
     private readonly GameObject[] _blockPrefabs;
+    [Inject(Id = "BlocksParent")]
+    private readonly Transform _blocksParent;
 
     private BlockMover _blockMover;
     private DiContainer _container;
@@ -27,7 +29,7 @@ public class BlockSpawner : IInitializable
     {
         GameObject blockPrefab = _blockPrefabs[Random.Range(0, _blockPrefabs.Length)];
 
-        GameObject block = _container.InstantiatePrefab(blockPrefab, _blockSpawnPoint.position, Quaternion.identity, _blockSpawnPoint);
+        GameObject block = _container.InstantiatePrefab(blockPrefab, _blockSpawnPoint.position, Quaternion.identity, _blocksParent);
         if(block.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
         {
             _blockMover.SetCurrentBlock(block, rb);

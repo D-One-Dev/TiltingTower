@@ -18,12 +18,16 @@ public class BlockMoveInput : ITickable
         _blockMover = blockMover;
         _controls = controls;
 
-        _controls.Gameplay.PointerTap.performed += ctx =>
+        _controls.Gameplay.PointerTap.started += ctx =>
         {
             _primaryTouch = true;
             _lastTouchPosition = _controls.Gameplay.PointerPos.ReadValue<Vector2>();
         };
-        _controls.Gameplay.PointerTap.canceled += ctx => _primaryTouch = false;
+        _controls.Gameplay.PointerTap.canceled += ctx =>
+        {
+            _primaryTouch = false;
+            if(_controls.Gameplay.PointerPos.ReadValue<Vector2>() - _lastTouchPosition == Vector2.zero) _blockMover.RotateBlock();
+        };
 
         _controls.Enable();
     }
@@ -34,8 +38,6 @@ public class BlockMoveInput : ITickable
         {
             Vector2 currentTouchPosition = _controls.Gameplay.PointerPos.ReadValue<Vector2>();
             Vector2 pointerDelta = currentTouchPosition - _lastTouchPosition;
-
-            Debug.Log(pointerDelta);
 
             if(pointerDelta.x > minBlockHorizontalMoveDelta)
             {

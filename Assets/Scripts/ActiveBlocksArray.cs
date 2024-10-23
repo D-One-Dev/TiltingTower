@@ -22,6 +22,7 @@ public class ActiveBlocksArray
         foreach (Rigidbody2D block in activeBlocks)
         {
             block.bodyType = RigidbodyType2D.Static;
+            block.gameObject.GetComponent<SpriteRenderer>().color = Color.grey;
         }
 
         activeBlocks.Clear();
