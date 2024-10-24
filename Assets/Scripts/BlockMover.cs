@@ -17,16 +17,19 @@ public class BlockMover : IFixedTickable
     private ActiveBlocksArray _activeBlocksArray;
     private BlockSpawner _blockSpawner;
     private CameraMovement _cameraMovement;
+    private MaxHeightCounter _maxHeightCounter;
 
     private Vector3 _blockHorizontalDelta = Vector3.zero;
     private Vector3 _blockVerticalDelta;
 
     [Inject]
-    public void Construct(BlockSpawner blockSpawner, ActiveBlocksArray activeBlocksArray, CameraMovement cameraMovement)
+    public void Construct(BlockSpawner blockSpawner, ActiveBlocksArray activeBlocksArray, CameraMovement cameraMovement,
+        MaxHeightCounter maxHeightCounter)
     {
         _blockSpawner = blockSpawner;
         _activeBlocksArray = activeBlocksArray;
         _cameraMovement = cameraMovement;
+        _maxHeightCounter = maxHeightCounter;
     }
 
     public void FixedTick()
@@ -62,6 +65,7 @@ public class BlockMover : IFixedTickable
             _activeBlocksArray.AddNewBlock(_currentBlockRB);
         }
         _cameraMovement.UpdateMaxBlockHeight(_currentBlock);
+        _maxHeightCounter.UpdateMaxHeight(_currentBlock);
         _blockSpawner.SpawnBlock();
     }
 
@@ -92,6 +96,5 @@ public class BlockMover : IFixedTickable
     public void MoveBlockVertical(float amount)
     {
         _blockVerticalDelta = _blockVerticalMoveAmount * amount * Vector3.up;
-        Debug.Log(_blockVerticalDelta);
     }
 }

@@ -49,7 +49,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeSystem.cmake"
+			"path" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/arm64-v8a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeSystem.cmake"
 		},
 		{
 			"isExternal" : true,
@@ -324,7 +324,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
+			"path" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/arm64-v8a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -558,7 +558,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
+			"path" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/arm64-v8a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -722,7 +722,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
+			"path" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/arm64-v8a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -816,24 +816,24 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
+			"path" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/arm64-v8a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
 		},
 		{
 			"path" : "FramePacing/CMakeLists.txt"
 		},
 		{
 			"isExternal" : true,
-			"path" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/prefab/armeabi-v7a/prefab/lib/arm-linux-androideabi/cmake/games-frame-pacing/games-frame-pacingConfigVersion.cmake"
+			"path" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/prefab/arm64-v8a/prefab/lib/aarch64-linux-android/cmake/games-frame-pacing/games-frame-pacingConfigVersion.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/prefab/armeabi-v7a/prefab/lib/arm-linux-androideabi/cmake/games-frame-pacing/games-frame-pacingConfig.cmake"
+			"path" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/prefab/arm64-v8a/prefab/lib/aarch64-linux-android/cmake/games-frame-pacing/games-frame-pacingConfig.cmake"
 		}
 	],
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/armeabi-v7a",
+		"build" : "C:/Unity/Projects/TiltingTower/.utmp/RelWithDebInfo/1r5d3a5u/arm64-v8a",
 		"source" : "C:/Unity/Projects/TiltingTower/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp"
 	},
 	"version" : 
