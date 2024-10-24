@@ -849,7 +849,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockSpawnPoint: {fileID: 801418551}
   blockPrefabs:
-  - {fileID: 2759198348245177610, guid: 9926994a5ec92624bba2ce072e2207b3, type: 3}
+  - {fileID: 2759198348245177610, guid: 5bb07fe6799dabd449451fb23996a69c, type: 3}
+  - {fileID: 2759198348245177610, guid: d8e93c9f7444a864dbb92a09ac82f7f5, type: 3}
+  - {fileID: 2759198348245177610, guid: a18783b68af44a74ca56b1d5a5882fa3, type: 3}
+  - {fileID: 2759198348245177610, guid: 7be02fd212e9f0e4796a73cb54341b2c, type: 3}
+  - {fileID: 2759198348245177610, guid: 592076a1a581dca4bb303b72339f27db, type: 3}
+  - {fileID: 2759198348245177610, guid: d1def154d187b5544a46daaf1cdc3e9f, type: 3}
+  - {fileID: 2759198348245177610, guid: 02dda154cc8bf7247b48c88fc30f505b, type: 3}
   blockFallSpeed: 0.025
   minBlockHorizontalMoveDelta: 100
   blockHorizontalMoveAmount: 0.25
@@ -927,7 +933,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1314045816
 BoxCollider2D:
   m_ObjectHideFlags: 0
