@@ -14,6 +14,7 @@ public class BlockMover : IFixedTickable
 
     private GameObject _currentBlock;
     private Rigidbody2D _currentBlockRB;
+    private BlockShader _currentBlockShader;
     private ActiveBlocksArray _activeBlocksArray;
     private BlockSpawner _blockSpawner;
     private CameraMovement _cameraMovement;
@@ -89,6 +90,8 @@ public class BlockMover : IFixedTickable
     {
         _currentBlock = block;
         _currentBlockRB = rb;
+        _currentBlockShader = _currentBlock.GetComponent<BlockShader>();
+        _currentBlockShader.UpdateShade(0f);
     }
 
     public void MoveBlockHorizontal(int direction)
@@ -99,6 +102,7 @@ public class BlockMover : IFixedTickable
     public void RotateBlock()
     {
         _currentBlock.transform.Rotate(0f, 0f, -90f);
+        _currentBlockShader.UpdateShade(_currentBlock.transform.localEulerAngles.z);
     }
 
     public void MoveBlockVertical(float amount)
