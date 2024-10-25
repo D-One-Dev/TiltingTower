@@ -15,6 +15,7 @@ public class SceneInstaller : MonoInstaller
     [SerializeField] private Transform blocksParent;
     [SerializeField] private LayerMask blocksLayer;
     [SerializeField] private float nextTriggerVerticalOffset;
+    [SerializeField] private Transform canvasBottomPoint;
     public override void InstallBindings()
     {
         this.Container.Bind<Transform>()
@@ -99,6 +100,11 @@ public class SceneInstaller : MonoInstaller
         this.Container.Bind<float>()
             .WithId("NextTriggerVerticalOffset")
             .FromInstance(nextTriggerVerticalOffset)
+            .AsTransient();
+
+        this.Container.Bind<Transform>()
+            .WithId("CanvasBottomPoint")
+            .FromInstance(canvasBottomPoint)
             .AsTransient();
     }
 }

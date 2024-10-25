@@ -16,12 +16,17 @@ public class ActiveBlocksArray : IInitializable
         activeBlocks.Add(block);
     }
 
+    public void RemoveBlock(Rigidbody2D rb)
+    {
+        if(activeBlocks.Contains(rb)) activeBlocks.Remove(rb);
+    }
+
     public void FixBlocks()
     {
         foreach (Rigidbody2D block in activeBlocks)
         {
-            block.bodyType = RigidbodyType2D.Static;
             block.gameObject.GetComponent<SpriteRenderer>().color = Color.grey;
+            MonoBehaviour.Destroy(block);
         }
 
         activeBlocks.Clear();

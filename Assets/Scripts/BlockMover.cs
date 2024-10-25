@@ -30,6 +30,9 @@ public class BlockMover : IFixedTickable
         _activeBlocksArray = activeBlocksArray;
         _cameraMovement = cameraMovement;
         _maxHeightCounter = maxHeightCounter;
+
+        BlockCollider.OnBlockCollision += BlockCollision;
+        BlockCollider.OnFallCollision += FallCollision;
     }
 
     public void FixedTick()
@@ -42,45 +45,50 @@ public class BlockMover : IFixedTickable
         }
     }
 
-    private void BlockCollision()
+    private void BlockCollision(GameObject block)
     {
-        bool flag = false;
-        foreach(FixTrigger fixTrigger in _fixTriggers)
+        if(block == _currentBlock)
         {
-            if (fixTrigger.CheckCollision())
+            bool flag = false;
+            foreach (FixTrigger fixTrigger in _fixTriggers)
             {
-                flag = true;
-                break;
+                if (fixTrigger.CheckCollision())
+                {
+                    flag = true;
+                    break;
+                }
             }
-        }
 
-        if (flag)
-        {
-            _activeBlocksArray.AddNewBlock(_currentBlockRB);
-            _activeBlocksArray.FixBlocks();
+            if (flag)
+            {
+                _activeBlocksArray.AddNewBlock(_currentBlockRB);
+                _activeBlocksArray.FixBlocks();
+            }
+            else
+            {
+                _currentBlockRB.bodyType = RigidbodyType2D.Dynamic;
+                _activeBlocksArray.AddNewBlock(_currentBlockRB);
+            }
+            _cameraMovement.UpdateMaxBlockHeight(_currentBlock);
+            _maxHeightCounter.UpdateMaxHeight(_currentBlock);
+            _blockSpawner.SpawnBlock();
         }
-        else
+    }
+
+    public void FallCollision(GameObject block)
+    {
+        if(block == _currentBlock)
         {
-            _currentBlockRB.bodyType = RigidbodyType2D.Dynamic;
-            _activeBlocksArray.AddNewBlock(_currentBlockRB);
+            _blockSpawner.SpawnBlock();
         }
-        _cameraMovement.UpdateMaxBlockHeight(_currentBlock);
-        _maxHeightCounter.UpdateMaxHeight(_currentBlock);
-        _blockSpawner.SpawnBlock();
+        _activeBlocksArray.RemoveBlock(block.GetComponent<Rigidbody2D>());
+        Debug.Log("Block Fell!!!!!");
     }
 
     public void SetCurrentBlock(GameObject block, Rigidbody2D rb)
     {
-        if (_currentBlock != null && _currentBlock.TryGetComponent<BlockCollider>(out BlockCollider lastBlockCollider))
-        {
-            lastBlockCollider.OnBlockCollision -= BlockCollision;
-        }
         _currentBlock = block;
         _currentBlockRB = rb;
-        if(_currentBlock.TryGetComponent<BlockCollider>(out BlockCollider blockCollider))
-        {
-            blockCollider.OnBlockCollision += BlockCollision;
-        }
     }
 
     public void MoveBlockHorizontal(int direction)
