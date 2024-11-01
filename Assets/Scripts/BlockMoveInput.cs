@@ -19,6 +19,11 @@ public class BlockMoveInput : ITickable
         _blockMover = blockMover;
         _controls = controls;
 
+        //debug keyboard input
+        _controls.Gameplay.MoveBlockLeft.performed += ctx => _blockMover.MoveBlockHorizontal(-1);
+        _controls.Gameplay.MoveBlockRight.performed += ctx => _blockMover.MoveBlockHorizontal(1);
+        _controls.Gameplay.RotateBlock.performed += ctx => _blockMover.RotateBlock();
+
         _controls.Gameplay.PointerTap.started += ctx =>
         {
             _primaryTouch = true;

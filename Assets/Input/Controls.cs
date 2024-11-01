@@ -53,6 +53,42 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MoveBlockLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""961113d1-06b9-4a66-988d-2846325b2930"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveBlockRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""26f2d63a-f9e9-4224-8b19-00b21c5151ce"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotateBlock"",
+                    ""type"": ""Button"",
+                    ""id"": ""5424190f-e7dc-4ced-8f6f-218494b4abb5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DropBlock"",
+                    ""type"": ""Button"",
+                    ""id"": ""30e46501-085a-4908-8252-4a568267c839"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -121,6 +157,50 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""PointerDelta"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff9ebd36-f0e0-450c-b653-ae6cf21c1b69"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveBlockLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""08d16dec-23ab-4896-a1b1-25e3a4ad59da"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveBlockRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""13e05bd4-0ef7-47cb-b141-418be26b469e"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateBlock"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f1f48e02-09ba-40b0-9d16-9ace538bf472"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DropBlock"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -132,6 +212,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Gameplay_PointerPos = m_Gameplay.FindAction("PointerPos", throwIfNotFound: true);
         m_Gameplay_PointerTap = m_Gameplay.FindAction("PointerTap", throwIfNotFound: true);
         m_Gameplay_PointerDelta = m_Gameplay.FindAction("PointerDelta", throwIfNotFound: true);
+        m_Gameplay_MoveBlockLeft = m_Gameplay.FindAction("MoveBlockLeft", throwIfNotFound: true);
+        m_Gameplay_MoveBlockRight = m_Gameplay.FindAction("MoveBlockRight", throwIfNotFound: true);
+        m_Gameplay_RotateBlock = m_Gameplay.FindAction("RotateBlock", throwIfNotFound: true);
+        m_Gameplay_DropBlock = m_Gameplay.FindAction("DropBlock", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -201,6 +285,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_PointerPos;
     private readonly InputAction m_Gameplay_PointerTap;
     private readonly InputAction m_Gameplay_PointerDelta;
+    private readonly InputAction m_Gameplay_MoveBlockLeft;
+    private readonly InputAction m_Gameplay_MoveBlockRight;
+    private readonly InputAction m_Gameplay_RotateBlock;
+    private readonly InputAction m_Gameplay_DropBlock;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
@@ -208,6 +296,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @PointerPos => m_Wrapper.m_Gameplay_PointerPos;
         public InputAction @PointerTap => m_Wrapper.m_Gameplay_PointerTap;
         public InputAction @PointerDelta => m_Wrapper.m_Gameplay_PointerDelta;
+        public InputAction @MoveBlockLeft => m_Wrapper.m_Gameplay_MoveBlockLeft;
+        public InputAction @MoveBlockRight => m_Wrapper.m_Gameplay_MoveBlockRight;
+        public InputAction @RotateBlock => m_Wrapper.m_Gameplay_RotateBlock;
+        public InputAction @DropBlock => m_Wrapper.m_Gameplay_DropBlock;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -226,6 +318,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PointerDelta.started += instance.OnPointerDelta;
             @PointerDelta.performed += instance.OnPointerDelta;
             @PointerDelta.canceled += instance.OnPointerDelta;
+            @MoveBlockLeft.started += instance.OnMoveBlockLeft;
+            @MoveBlockLeft.performed += instance.OnMoveBlockLeft;
+            @MoveBlockLeft.canceled += instance.OnMoveBlockLeft;
+            @MoveBlockRight.started += instance.OnMoveBlockRight;
+            @MoveBlockRight.performed += instance.OnMoveBlockRight;
+            @MoveBlockRight.canceled += instance.OnMoveBlockRight;
+            @RotateBlock.started += instance.OnRotateBlock;
+            @RotateBlock.performed += instance.OnRotateBlock;
+            @RotateBlock.canceled += instance.OnRotateBlock;
+            @DropBlock.started += instance.OnDropBlock;
+            @DropBlock.performed += instance.OnDropBlock;
+            @DropBlock.canceled += instance.OnDropBlock;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -239,6 +343,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PointerDelta.started -= instance.OnPointerDelta;
             @PointerDelta.performed -= instance.OnPointerDelta;
             @PointerDelta.canceled -= instance.OnPointerDelta;
+            @MoveBlockLeft.started -= instance.OnMoveBlockLeft;
+            @MoveBlockLeft.performed -= instance.OnMoveBlockLeft;
+            @MoveBlockLeft.canceled -= instance.OnMoveBlockLeft;
+            @MoveBlockRight.started -= instance.OnMoveBlockRight;
+            @MoveBlockRight.performed -= instance.OnMoveBlockRight;
+            @MoveBlockRight.canceled -= instance.OnMoveBlockRight;
+            @RotateBlock.started -= instance.OnRotateBlock;
+            @RotateBlock.performed -= instance.OnRotateBlock;
+            @RotateBlock.canceled -= instance.OnRotateBlock;
+            @DropBlock.started -= instance.OnDropBlock;
+            @DropBlock.performed -= instance.OnDropBlock;
+            @DropBlock.canceled -= instance.OnDropBlock;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -261,5 +377,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnPointerPos(InputAction.CallbackContext context);
         void OnPointerTap(InputAction.CallbackContext context);
         void OnPointerDelta(InputAction.CallbackContext context);
+        void OnMoveBlockLeft(InputAction.CallbackContext context);
+        void OnMoveBlockRight(InputAction.CallbackContext context);
+        void OnRotateBlock(InputAction.CallbackContext context);
+        void OnDropBlock(InputAction.CallbackContext context);
     }
 }
