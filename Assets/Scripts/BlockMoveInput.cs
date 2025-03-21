@@ -4,7 +4,10 @@ using Zenject;
 public class BlockMoveInput : ITickable
 {
     [Inject(Id = "MinBlockHorizontalMoveDelta")]
-    private readonly float minBlockHorizontalMoveDelta;
+    private readonly float _minBlockHorizontalMoveDelta;
+
+    [Inject(Id = "VerticalAccelerationScale")]
+    private readonly float _verticalAccelerationScale;
 
     private BlockMover _blockMover;
     private Controls _controls;
@@ -47,21 +50,21 @@ public class BlockMoveInput : ITickable
             Vector2 currentTouchPosition = _controls.Gameplay.PointerPos.ReadValue<Vector2>();
             Vector2 pointerDelta = currentTouchPosition - _lastTouchPosition;
 
-            if(pointerDelta.x > minBlockHorizontalMoveDelta)
+            if(pointerDelta.x > _minBlockHorizontalMoveDelta)
             {
                 _blockMover.MoveBlockHorizontal(1);
 
                 _lastTouchPosition = currentTouchPosition;
             }
 
-            else if (pointerDelta.x < -minBlockHorizontalMoveDelta)
+            else if (pointerDelta.x < -_minBlockHorizontalMoveDelta)
             {
                 _blockMover.MoveBlockHorizontal(-1);
 
                 _lastTouchPosition = currentTouchPosition;
             }
 
-            if (pointerDelta.y < 0) _blockMover.MoveBlockVertical(pointerDelta.y);
+            if (pointerDelta.y < 0) _blockMover.MoveBlockVertical(pointerDelta.y * _verticalAccelerationScale);
         }
     }
 }

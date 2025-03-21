@@ -860,7 +860,7 @@ MonoBehaviour:
   - {fileID: 2759198348245177610, guid: 592076a1a581dca4bb303b72339f27db, type: 3}
   - {fileID: 2759198348245177610, guid: d1def154d187b5544a46daaf1cdc3e9f, type: 3}
   - {fileID: 2759198348245177610, guid: 02dda154cc8bf7247b48c88fc30f505b, type: 3}
-  blockFallSpeed: 1
+  blockFallSpeed: 0.035
   minBlockHorizontalMoveDelta: 100
   blockHorizontalMoveAmount: 0.25
   blockVerticalMoveAmount: 0.005
@@ -877,6 +877,7 @@ MonoBehaviour:
   playerHealth: 3
   helathbar: {fileID: 1367143790}
   eventHandler: {fileID: 1286143884}
+  verticalAccelerationScale: 0.025
 --- !u!114 &1286143882
 MonoBehaviour:
   m_ObjectHideFlags: 0

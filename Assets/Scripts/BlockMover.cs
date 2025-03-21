@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography;
 using UnityEngine;
 using Zenject;
 
@@ -44,15 +45,23 @@ public class BlockMover : ITickable
         {
             _currentBlockRB.transform.Translate(_currentBlockRB.transform.InverseTransformDirection(Vector3.right) * _blockHorizontalDelta);
             _blockHorizontalDelta = 0f;
+            
+            Vector2 delta = Vector2.down * (_blockFallSpeed + _blockVerticalDelta);
 
             RaycastHit2D[] collisions = new RaycastHit2D[10];
-            int hitCount = _currentBlockRB.Cast(Vector2.down * (_blockFallSpeed + _blockVerticalDelta), collisions);
+            int hitCount = _currentBlockRB.Cast(delta, collisions);
             if (hitCount <= 0)
             {
-                _currentBlockRB.linearVelocity = Vector2.down * (_blockFallSpeed + _blockVerticalDelta);
+                //_currentBlockRB.linearVelocity = Vector2.down * (_blockFallSpeed + _blockVerticalDelta);
+                _currentBlockRB.MovePosition(_currentBlockRB.position + delta);
             }
             else
             {
+                _currentBlockRB.MovePosition(_currentBlockRB.position - delta * 0.25f);
+                _currentBlockRB.linearVelocity = Vector3.zero;
+                _currentBlockRB.angularVelocity = 0;
+                _currentBlockRB.gravityScale = 1f;
+                
                 BlockCollision();
             }
             _blockVerticalDelta = 0f;
@@ -61,31 +70,22 @@ public class BlockMover : ITickable
 
     private void BlockCollision()
     {
-        bool flag = false;
+        _currentBlockRB.linearVelocity = Vector3.zero;
+        _currentBlockRB.angularVelocity = 0;
+        _currentBlockRB.gravityScale = 1f;
+        _currentBlockShader.DisableShade();
+
         foreach (FixTrigger fixTrigger in _fixTriggers)
         {
             if (fixTrigger.CheckCollision())
             {
-                flag = true;
+                _activeBlocksArray.FixBlocks();
                 break;
             }
         }
 
-        if (flag)
-        {
-            _activeBlocksArray.AddNewBlock(_currentBlockRB);
-            _activeBlocksArray.FixBlocks();
-        }
-        else
-        {
-            _currentBlockRB.linearVelocity = Vector3.zero;
-            _currentBlockRB.angularVelocity = 0;
-            _currentBlockRB.gravityScale = 1f;
-
-            _currentBlockShader.DisableShade();
-
-            _activeBlocksArray.AddNewBlock(_currentBlockRB);
-        }
+        _activeBlocksArray.AddNewBlock(_currentBlockRB);
+        
         _cameraMovement.UpdateMaxBlockHeight(_currentBlock);
         _maxHeightCounter.UpdateMaxHeight(_currentBlock);
         _blockSpawner.SpawnBlock();

@@ -20,6 +20,7 @@ public class SceneInstaller : MonoInstaller
     [SerializeField] private int playerHealth;
     [SerializeField] private Image helathbar;
     [SerializeField] private EventHandler eventHandler;
+    [SerializeField] private float verticalAccelerationScale;
     public override void InstallBindings()
     {
         this.Container.Bind<Transform>()
@@ -129,5 +130,10 @@ public class SceneInstaller : MonoInstaller
             .FromInstance(eventHandler)
             .AsSingle()
             .NonLazy();
+
+        this.Container.Bind<float>()
+        .WithId("VerticalAccelerationScale")
+        .FromInstance(verticalAccelerationScale)
+        .AsTransient();
     }
 }
