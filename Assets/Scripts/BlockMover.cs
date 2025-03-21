@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using Zenject;
 
-public class BlockMover : IFixedTickable
+public class BlockMover : ITickable
 {
+    public event Action OnBlockFell;
+
     [Inject(Id = "BlockFallSpeed")]
     private readonly float _blockFallSpeed;
     [Inject(Id = "BlockHorizontalMoveAmount")]
@@ -20,8 +23,8 @@ public class BlockMover : IFixedTickable
     private CameraMovement _cameraMovement;
     private MaxHeightCounter _maxHeightCounter;
 
-    private Vector3 _blockHorizontalDelta = Vector3.zero;
-    private Vector3 _blockVerticalDelta;
+    private float _blockHorizontalDelta;
+    private float _blockVerticalDelta;
 
     [Inject]
     public void Construct(BlockSpawner blockSpawner, ActiveBlocksArray activeBlocksArray, CameraMovement cameraMovement,
@@ -32,58 +35,71 @@ public class BlockMover : IFixedTickable
         _cameraMovement = cameraMovement;
         _maxHeightCounter = maxHeightCounter;
 
-        BlockCollider.OnBlockCollision += BlockCollision;
         BlockCollider.OnFallCollision += FallCollision;
     }
 
-    public void FixedTick()
+    public void Tick()
     {
         if (_currentBlockRB != null)
         {
-            _currentBlockRB.MovePosition(_currentBlockRB.transform.position + ((_blockFallSpeed) * Vector3.down) + _blockVerticalDelta + _blockHorizontalDelta);
-            _blockVerticalDelta = Vector3.zero;
-            _blockHorizontalDelta = Vector3.zero;
-        }
-    }
+            _currentBlockRB.transform.Translate(_currentBlockRB.transform.InverseTransformDirection(Vector3.right) * _blockHorizontalDelta);
+            _blockHorizontalDelta = 0f;
 
-    private void BlockCollision(GameObject block)
-    {
-        if(block == _currentBlock)
-        {
-            bool flag = false;
-            foreach (FixTrigger fixTrigger in _fixTriggers)
+            RaycastHit2D[] collisions = new RaycastHit2D[10];
+            int hitCount = _currentBlockRB.Cast(Vector2.down * (_blockFallSpeed + _blockVerticalDelta), collisions);
+            if (hitCount <= 0)
             {
-                if (fixTrigger.CheckCollision())
-                {
-                    flag = true;
-                    break;
-                }
-            }
-
-            if (flag)
-            {
-                _activeBlocksArray.AddNewBlock(_currentBlockRB);
-                _activeBlocksArray.FixBlocks();
+                _currentBlockRB.linearVelocity = Vector2.down * (_blockFallSpeed + _blockVerticalDelta);
             }
             else
             {
-                _currentBlockRB.bodyType = RigidbodyType2D.Dynamic;
-                _activeBlocksArray.AddNewBlock(_currentBlockRB);
+                BlockCollision();
             }
-            _cameraMovement.UpdateMaxBlockHeight(_currentBlock);
-            _maxHeightCounter.UpdateMaxHeight(_currentBlock);
-            _blockSpawner.SpawnBlock();
+            _blockVerticalDelta = 0f;
         }
+    }
+
+    private void BlockCollision()
+    {
+        bool flag = false;
+        foreach (FixTrigger fixTrigger in _fixTriggers)
+        {
+            if (fixTrigger.CheckCollision())
+            {
+                flag = true;
+                break;
+            }
+        }
+
+        if (flag)
+        {
+            _activeBlocksArray.AddNewBlock(_currentBlockRB);
+            _activeBlocksArray.FixBlocks();
+        }
+        else
+        {
+            _currentBlockRB.linearVelocity = Vector3.zero;
+            _currentBlockRB.angularVelocity = 0;
+            _currentBlockRB.gravityScale = 1f;
+
+            _currentBlockShader.DisableShade();
+
+            _activeBlocksArray.AddNewBlock(_currentBlockRB);
+        }
+        _cameraMovement.UpdateMaxBlockHeight(_currentBlock);
+        _maxHeightCounter.UpdateMaxHeight(_currentBlock);
+        _blockSpawner.SpawnBlock();
     }
 
     public void FallCollision(GameObject block)
     {
-        if(block == _currentBlock)
+        if (block == _currentBlock)
         {
             _blockSpawner.SpawnBlock();
         }
         _activeBlocksArray.RemoveBlock(block.GetComponent<Rigidbody2D>());
         Debug.Log("Block Fell!!!!!");
+        OnBlockFell?.Invoke();
     }
 
     public void SetCurrentBlock(GameObject block, Rigidbody2D rb)
@@ -96,7 +112,7 @@ public class BlockMover : IFixedTickable
 
     public void MoveBlockHorizontal(int direction)
     {
-        _blockHorizontalDelta = _blockHorizontalMoveAmount * direction * Vector3.right;
+        _blockHorizontalDelta = _blockHorizontalMoveAmount * direction;
     }
 
     public void RotateBlock()
@@ -107,6 +123,7 @@ public class BlockMover : IFixedTickable
 
     public void MoveBlockVertical(float amount)
     {
-        _blockVerticalDelta = _blockVerticalMoveAmount * amount * Vector3.up;
+        Debug.Log(amount);
+        _blockVerticalDelta = -_blockVerticalMoveAmount * amount;
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public class SceneInstaller : MonoInstaller
@@ -16,6 +17,9 @@ public class SceneInstaller : MonoInstaller
     [SerializeField] private LayerMask blocksLayer;
     [SerializeField] private float nextTriggerVerticalOffset;
     [SerializeField] private Transform canvasBottomPoint;
+    [SerializeField] private int playerHealth;
+    [SerializeField] private Image helathbar;
+    [SerializeField] private EventHandler eventHandler;
     public override void InstallBindings()
     {
         this.Container.Bind<Transform>()
@@ -106,5 +110,24 @@ public class SceneInstaller : MonoInstaller
             .WithId("CanvasBottomPoint")
             .FromInstance(canvasBottomPoint)
             .AsTransient();
+
+        this.Container.Bind<int>()
+            .WithId("PlayerHealth")
+            .FromInstance(playerHealth)
+            .AsTransient();
+        this.Container.Bind<Image>()
+            .WithId("Healthbar")
+            .FromInstance(helathbar)
+            .AsTransient();
+
+        this.Container.BindInterfacesAndSelfTo<PlayerHealth>()
+            .FromNew()
+            .AsSingle()
+            .NonLazy();
+
+        this.Container.Bind<EventHandler>()
+            .FromInstance(eventHandler)
+            .AsSingle()
+            .NonLazy();
     }
 }

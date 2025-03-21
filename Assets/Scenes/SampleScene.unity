@@ -297,8 +297,8 @@ Canvas:
   m_GameObject: {fileID: 467946602}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -325,6 +325,7 @@ RectTransform:
   m_Children:
   - {fileID: 642350644}
   - {fileID: 1391509558}
+  - {fileID: 1367143789}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -815,6 +816,7 @@ GameObject:
   - component: {fileID: 1286143882}
   - component: {fileID: 1286143881}
   - component: {fileID: 1286143883}
+  - component: {fileID: 1286143884}
   m_Layer: 0
   m_Name: System
   m_TagString: Untagged
@@ -858,10 +860,10 @@ MonoBehaviour:
   - {fileID: 2759198348245177610, guid: 592076a1a581dca4bb303b72339f27db, type: 3}
   - {fileID: 2759198348245177610, guid: d1def154d187b5544a46daaf1cdc3e9f, type: 3}
   - {fileID: 2759198348245177610, guid: 02dda154cc8bf7247b48c88fc30f505b, type: 3}
-  blockFallSpeed: 0.025
+  blockFallSpeed: 1
   minBlockHorizontalMoveDelta: 100
   blockHorizontalMoveAmount: 0.25
-  blockVerticalMoveAmount: 0.0001
+  blockVerticalMoveAmount: 0.005
   fixTriggers:
   - {fileID: 540774182}
   cameraMovementSmoothness: 10
@@ -872,6 +874,9 @@ MonoBehaviour:
     m_Bits: 64
   nextTriggerVerticalOffset: 10
   canvasBottomPoint: {fileID: 1391509558}
+  playerHealth: 3
+  helathbar: {fileID: 1367143790}
+  eventHandler: {fileID: 1286143884}
 --- !u!114 &1286143882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -919,6 +924,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHeightText: {fileID: 642350645}
   floorPoint: {fileID: 919791259}
+--- !u!114 &1286143884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286143878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bfab979e9cae764a8ada2a4fc5622e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1314045815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,6 +1070,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1367143788
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1367143789}
+  - component: {fileID: 1367143791}
+  - component: {fileID: 1367143790}
+  m_Layer: 5
+  m_Name: Health
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1367143789
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367143788}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 467946606}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -300}
+  m_SizeDelta: {x: -100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1367143790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367143788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.11898301, g: 0.49865216, b: 0.117606565, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 92e4b43fb93ec3f46842ed1fac97f650, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1367143791
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367143788}
+  m_CullTransparentMesh: 1
 --- !u!1 &1391509557
 GameObject:
   m_ObjectHideFlags: 0

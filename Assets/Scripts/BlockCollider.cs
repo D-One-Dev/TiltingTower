@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 public class BlockCollider : MonoBehaviour
 {
@@ -7,6 +8,13 @@ public class BlockCollider : MonoBehaviour
     public static event Action<GameObject> OnFallCollision;
 
     private Rigidbody2D _rb;
+    private EventHandler _eventHandler;
+
+    [Inject]
+    public void Construct(EventHandler eventHandler)
+    {
+        _eventHandler = eventHandler;
+    }
 
     private void Start()
     {
@@ -26,6 +34,7 @@ public class BlockCollider : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        OnBlockCollision?.Invoke(this.gameObject);
+        //OnBlockCollision?.Invoke(this.gameObject);
+        //_eventHandler.BlockCollision(this.gameObject);
     }
 }

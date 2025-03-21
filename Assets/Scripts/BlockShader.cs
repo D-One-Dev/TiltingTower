@@ -4,11 +4,6 @@ public class BlockShader : MonoBehaviour
 {
     [SerializeField] private GameObject topShade, rightShade, bottomShade, leftShade;
 
-    private void Start()
-    {
-        BlockCollider.OnBlockCollision += DisableShade;
-    }
-
     public void UpdateShade(float angle)
     {
         switch (angle)
@@ -40,17 +35,13 @@ public class BlockShader : MonoBehaviour
         }
     }
 
-    private void DisableShade(GameObject block)
+    public void DisableShade()
     {
-        if(this.gameObject == block && this != null)
-        {
-            topShade.SetActive(false);
-            rightShade.SetActive(false);
-            bottomShade.SetActive(false);
-            leftShade.SetActive(false);
+        topShade.SetActive(false);
+        rightShade.SetActive(false);
+        bottomShade.SetActive(false);
+        leftShade.SetActive(false);
 
-            BlockCollider.OnBlockCollision -= DisableShade;
-            Destroy(this);
-        }
+        Destroy(this);
     }
 }
