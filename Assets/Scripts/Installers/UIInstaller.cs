@@ -8,17 +8,17 @@ public class UIInstaller : MonoInstaller
     [SerializeField] private Transform floorPoint;
     public override void InstallBindings()
     {
-        this.Container.Bind<TMP_Text>()
+        Container.Bind<TMP_Text>()
             .WithId("MaxHeightText")
             .FromInstance(maxHeightText)
             .AsTransient();
 
-        this.Container.BindInterfacesAndSelfTo<MaxHeightCounter>()
+        Container.BindInterfacesAndSelfTo<MaxHeightCounter>()
             .FromNew()
             .AsSingle()
             .NonLazy();
 
-        this.Container.Bind<Transform>()
+        Container.Bind<Transform>()
             .WithId("FloorPoint")
             .FromInstance(floorPoint)
             .AsTransient();

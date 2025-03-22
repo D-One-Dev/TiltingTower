@@ -9,16 +9,12 @@ public class PlayerHealth : IInitializable
     [Inject(Id = "PlayerHealth")]
     private readonly int _startHealth;
 
-    private BlockMover _blockMover;
-
     private int _currentHealth;
 
     [Inject]
-    public void Construct(BlockMover blockMover)
+    public void Construct(EventHandler eventHandler)
     {
-        _blockMover = blockMover;
-
-        _blockMover.OnBlockFell += TakeDamage;
+        eventHandler.OnBlockFell += TakeDamage;
     }
 
     public void Initialize()

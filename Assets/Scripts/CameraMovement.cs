@@ -10,6 +10,12 @@ public class CameraMovement : ITickable
 
     private float _maxBlockHeight = 0;
 
+    [Inject]
+    public void Construct(EventHandler eventHandler)
+    {
+        eventHandler.OnUpdateMaxBlockHeight += UpdateMaxBlockHeight;
+    }
+
     public void Tick()
     {
         _camera.position = new Vector3(_camera.position.x,

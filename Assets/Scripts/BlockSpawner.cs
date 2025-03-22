@@ -10,14 +10,15 @@ public class BlockSpawner : IInitializable
     [Inject(Id = "BlocksParent")]
     private readonly Transform _blocksParent;
 
-    private BlockMover _blockMover;
     private DiContainer _container;
+    private EventHandler _evevntHandler;
 
     [Inject]
-    public void Construct(DiContainer container, BlockMover blockMover)
+    public void Construct(DiContainer container, EventHandler eventHandler)
     {
         _container = container;
-        _blockMover = blockMover;
+        _evevntHandler = eventHandler;
+        _evevntHandler.OnSpawnBlock += SpawnBlock;
     }
 
     public void Initialize()
@@ -30,9 +31,9 @@ public class BlockSpawner : IInitializable
         GameObject blockPrefab = _blockPrefabs[Random.Range(0, _blockPrefabs.Length)];
 
         GameObject block = _container.InstantiatePrefab(blockPrefab, _blockSpawnPoint.position, Quaternion.identity, _blocksParent);
-        if(block.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+        if (block.TryGetComponent(out Rigidbody2D rb))
         {
-            _blockMover.SetCurrentBlock(block, rb);
+            _evevntHandler.SetCurrentBlock(block, rb);
             return;
         }
         Debug.LogErrorFormat("Block " + block.name + " has no rigidbody2D");

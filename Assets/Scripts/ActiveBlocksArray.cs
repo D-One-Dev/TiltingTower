@@ -2,33 +2,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class ActiveBlocksArray : IInitializable
+public class ActiveBlocksArray
 {
-    private List<Rigidbody2D> activeBlocks;
+    private readonly List<Rigidbody2D> _activeBlocks = new();
 
-    public void Initialize()
+    [Inject]
+    public void Construct(EventHandler eventHandler)
     {
-        activeBlocks = new List<Rigidbody2D>();
+        eventHandler.OnAddBlockToActiveBlocksArray += AddBlockToActiveBlocksArray;
+        eventHandler.OnRemoveBlockFromActiveBlocksArray += RemoveBlockFromActiveBlocksArray;
+        eventHandler.OnFixBlocksInActiveBlocksArray += FixBlocksInActiveBlocksArray;
     }
 
-    public void AddNewBlock(Rigidbody2D block)
+    public void AddBlockToActiveBlocksArray(Rigidbody2D block)
     {
-        activeBlocks.Add(block);
+        _activeBlocks.Add(block);
     }
 
-    public void RemoveBlock(Rigidbody2D rb)
+    public void RemoveBlockFromActiveBlocksArray(Rigidbody2D rb)
     {
-        if(activeBlocks.Contains(rb)) activeBlocks.Remove(rb);
+        if (_activeBlocks.Contains(rb)) _activeBlocks.Remove(rb);
     }
 
-    public void FixBlocks()
+    public void FixBlocksInActiveBlocksArray()
     {
-        foreach (Rigidbody2D block in activeBlocks)
+        foreach (Rigidbody2D block in _activeBlocks)
         {
-            block.gameObject.GetComponent<SpriteRenderer>().color = Color.grey;
-            MonoBehaviour.Destroy(block);
+            if (block != null)
+            {
+                block.gameObject.GetComponent<SpriteRenderer>().color = Color.grey;
+                MonoBehaviour.Destroy(block);
+            }
         }
 
-        activeBlocks.Clear();
+        _activeBlocks.Clear();
     }
 }

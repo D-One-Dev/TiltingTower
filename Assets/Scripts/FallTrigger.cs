@@ -3,6 +3,7 @@ using UnityEngine;
 public class FallTrigger : MonoBehaviour
 {
     [SerializeField] private BoxCollider2D triggerCollider;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Destroy(collision.gameObject);

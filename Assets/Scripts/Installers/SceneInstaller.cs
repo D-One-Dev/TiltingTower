@@ -23,115 +23,126 @@ public class SceneInstaller : MonoInstaller
     [SerializeField] private float verticalAccelerationScale;
     public override void InstallBindings()
     {
-        this.Container.Bind<Transform>()
+        Container.Bind<Transform>()
             .WithId("BlockSpawnPoint")
             .FromInstance(blockSpawnPoint)
             .AsTransient();
-        this.Container.Bind<GameObject[]>()
+
+        Container.Bind<GameObject[]>()
             .WithId("BlockPrefabs")
             .FromInstance(blockPrefabs)
             .AsTransient();
-        this.Container.Bind<float>()
+
+        Container.Bind<float>()
             .WithId("BlockFallSpeed")
             .FromInstance(blockFallSpeed)
             .AsTransient();
-        this.Container.BindInterfacesAndSelfTo<BlockMover>()
-            .FromNew()
-            .AsSingle();
-        this.Container.BindInterfacesAndSelfTo<BlockSpawner>()
+
+        Container.BindInterfacesAndSelfTo<BlockMover>()
             .FromNew()
             .AsSingle()
             .NonLazy();
-        this.Container.BindInterfacesAndSelfTo<ActiveBlocksArray>()
-            .FromNew()
-            .AsSingle();
 
-        this.Container.Bind<Controls>()
+        Container.BindInterfacesAndSelfTo<BlockSpawner>()
+            .FromNew()
+            .AsSingle()
+            .NonLazy();
+
+        Container.Bind<ActiveBlocksArray>()
+            .FromNew()
+            .AsSingle()
+            .NonLazy();
+
+        Container.Bind<Controls>()
             .FromNew()
             .AsTransient();
 
-        this.Container.Bind<float>()
+        Container.Bind<float>()
             .WithId("MinBlockHorizontalMoveDelta")
             .FromInstance(minBlockHorizontalMoveDelta)
             .AsTransient();
 
-        this.Container.Bind<float>()
+        Container.Bind<float>()
             .WithId("BlockHorizontalMoveAmount")
             .FromInstance(blockHorizontalMoveAmount)
             .AsTransient();
-        this.Container.Bind<float>()
+
+        Container.Bind<float>()
             .WithId("BlockVerticalMoveAmount")
             .FromInstance(blockVerticalMoveAmount)
             .AsTransient();
 
-        this.Container.BindInterfacesAndSelfTo<BlockMoveInput>()
+        Container.BindInterfacesAndSelfTo<BlockMoveInput>()
             .FromNew()
             .AsSingle()
             .NonLazy();
 
-        this.Container.Bind<FixTrigger[]>()
+        Container.Bind<FixTrigger[]>()
             .WithId("FixTriggers")
             .FromInstance(fixTriggers)
             .AsTransient();
 
-        this.Container.Bind<float>()
+        Container.Bind<float>()
             .WithId("CameraMovementSmoothness")
             .FromInstance(cameraMovementSmoothness)
             .AsTransient();
-        this.Container.Bind<Transform>()
+
+        Container.Bind<Transform>()
             .WithId("Camera")
             .FromInstance(cam)
             .AsTransient();
 
-        this.Container.BindInterfacesAndSelfTo<CameraMovement>()
+        Container.BindInterfacesAndSelfTo<CameraMovement>()
             .FromNew()
             .AsSingle()
             .NonLazy();
 
-        this.Container.Bind<Transform>()
+        Container.Bind<Transform>()
             .WithId("BlocksParent")
             .FromInstance(blocksParent)
             .AsTransient();
 
-        this.Container.BindInterfacesAndSelfTo<FPSUnlocker>()
+        Container.BindInterfacesAndSelfTo<FPSUnlocker>()
             .FromNew()
             .AsSingle()
             .NonLazy();
 
-        this.Container.Bind<LayerMask>()
+        Container.Bind<LayerMask>()
             .WithId("BlocksLayer")
             .FromInstance(blocksLayer)
             .AsTransient();
-        this.Container.Bind<float>()
+
+        Container.Bind<float>()
             .WithId("NextTriggerVerticalOffset")
             .FromInstance(nextTriggerVerticalOffset)
             .AsTransient();
 
-        this.Container.Bind<Transform>()
+        Container.Bind<Transform>()
             .WithId("CanvasBottomPoint")
             .FromInstance(canvasBottomPoint)
             .AsTransient();
 
-        this.Container.Bind<int>()
+        Container.Bind<int>()
             .WithId("PlayerHealth")
             .FromInstance(playerHealth)
             .AsTransient();
-        this.Container.Bind<Image>()
+
+        Container.Bind<Image>()
             .WithId("Healthbar")
             .FromInstance(helathbar)
             .AsTransient();
 
-        this.Container.BindInterfacesAndSelfTo<PlayerHealth>()
+        Container.BindInterfacesAndSelfTo<PlayerHealth>()
             .FromNew()
             .AsSingle()
             .NonLazy();
 
-        this.Container.Bind<EventHandler>()
+        Container.Bind<EventHandler>()
             .FromInstance(eventHandler)
             .AsSingle()
             .NonLazy();
 
-        this.Container.Bind<float>()
+        Container.Bind<float>()
         .WithId("VerticalAccelerationScale")
         .FromInstance(verticalAccelerationScale)
         .AsTransient();
